@@ -103,8 +103,9 @@ window.swiped_count = 0;
 		const delay = trickTinder();
 		window.swiped_count += 1;
 		if (delay) {
-			console.log('Too many likes for now, have to wait: ' + Math.floor(delay/1000/60/60) + ' hours and ' + Math.floor(delay/1000/60)%60 + ' minutes');
-			randomPeriod = delay;
+			console.log('Have to wait: ' + Math.floor(delay/1000/60/60) + ' hours and ' + Math.floor(delay/1000/60)%60 + ' minutes');
+      console.log('Swiped: ', + window.swiped_count)
+      randomPeriod = delay;
 		}
 
 		if (!randomPeriod) {
