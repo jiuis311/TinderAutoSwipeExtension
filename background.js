@@ -25,11 +25,12 @@ function runOutOfLike() {
 }
 
 function swipedAllNearBy() {
-	if (document.getElementsByTagName('html')[0].innerHTML.search('MỞ RA TOÀN CẦU') != -1) {
-    setTimeout(function() {
-      location.reload();
-    }, 900000)
-    return 1;
+	if (document.getElementsByTagName('html')[0].innerHTML.search('MỞ RA TOÀN CẦU') != -1 ||
+	document.getElementsByTagName('html')[0].innerHTML.search('Chúng tôi không tìm thấy ai có vẻ tương hợp bạn vào lúc này') != -1) {	
+		setTimeout(function() {
+			location.reload();
+		}, 900000)
+		return 1;
 	}
 	return 0;
 }
