@@ -26,7 +26,7 @@ function runOutOfLike() {
 
 function swipedAllNearBy() {
 	if (document.getElementsByTagName('html')[0].innerHTML.search('MỞ RA TOÀN CẦU') != -1 ||
-	document.getElementsByTagName('html')[0].innerHTML.search('Chúng tôi không tìm thấy ai có vẻ tương hợp bạn vào lúc này') != -1) {	
+	document.getElementsByTagName('html')[0].innerHTML.search('Chúng tôi không tìm thấy ai có vẻ tương hợp bạn vào lúc này') != -1) {
 		setTimeout(function() {
 			location.reload();
 		}, 900000)
@@ -53,10 +53,10 @@ function trickTinder() {
 		checkUpdateAccount();
 		return waitTime + 60*1000;
 	}
-	
+
 	// Check if there is subscription modal
   checkUpdateAccount();
-  
+
 	if (swipedAllNearBy()) {
     return 900000;
   };
@@ -69,13 +69,15 @@ function trickTinder() {
 	const like = buttons[3];
 
 	like.click();
+	if (window.swiped_count % 20 == 0) {
+		console.log('Swiped: ', + window.swiped_count)
+	}
 
 	const thereIsMatch = isMatch();
 	if (thereIsMatch) {
 		console.log('------------- IT\'S A MATCH ! -------------');
 		thereIsMatch.click();
 	}
-
 	return waitTime;
 }
 
@@ -89,33 +91,38 @@ function getRandomPeriod() {
 	return Math.round(Math.random() * (2000 - 500)) + 700;
 }
 
-window.swiped_count = 0;
+window.addEventListener('load', function () {
+	console.log("Start swiping!")
+	window.swiped_count = 0;
 
-(function loopSasori() {
-	// A random period between 500ms and 2secs
-	let randomPeriod = getRandomPeriod();
-	var btns = document.getElementsByClassName("Pos(r) Z(1)");
-	if (btns.length >= 10) {
-		btns[9].click();
-	}
-	setTimeout(function () {
-		randomPeriod = undefined;
-
-		const delay = trickTinder();
-		window.swiped_count += 1;
-		if (delay) {
-			console.log('Have to wait: ' + Math.floor(delay/1000/60/60) + ' hours and ' + Math.floor(delay/1000/60)%60 + ' minutes');
-      console.log('Swiped: ', + window.swiped_count)
-      randomPeriod = delay;
+	(function loopSasori() {
+		// A random period between 700ms and 2secs
+		let randomPeriod = getRandomPeriod();
+		var btns = document.getElementsByClassName("Pos(r) Z(1)");
+		if (btns.length >= 10) {
+			btns[9].click();
 		}
+		setTimeout(function () {
+			randomPeriod = undefined;
 
-		if (!randomPeriod) {
-			loopSasori();
-		} else {
-			setTimeout(function() {
-				checkUpdateAccount();
+			const delay = trickTinder();
+
+			window.swiped_count += 1;
+
+			if (delay) {
+				console.log('Have to wait: ' + Math.floor(delay/1000/60/60) + ' hours and ' + Math.floor(delay/1000/60)%60 + ' minutes');
+				console.log('Swiped: ', + window.swiped_count)
+				randomPeriod = delay;
+			}
+
+			if (!randomPeriod) {
 				loopSasori();
-			}, randomPeriod);
-		}
-	}, randomPeriod);
-}());
+			} else {
+				setTimeout(function() {
+					checkUpdateAccount();
+					loopSasori();
+				}, randomPeriod);
+			}
+		}, randomPeriod);
+	})();
+})
