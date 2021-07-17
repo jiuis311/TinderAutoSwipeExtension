@@ -11,7 +11,10 @@ function checkUpdateAccount() {
 }
 
 function closeModal() {
-  
+  var closeButton = document.querySelector('[aria-label="Đóng"]');
+  if (closeButton) {
+    closeButton.click();
+  }
 }
 
 function runOutOfLike() {
@@ -77,6 +80,9 @@ function trickTinder() {
 
   // Check if there is subscription modal
   checkUpdateAccount();
+
+  // Check if modal open then close it
+  closeModal();
 
   if (swipedAllNearBy()) {
     return 900000;
